@@ -41,7 +41,7 @@ samples, guidance on mobile development, and a full API reference.
 
 - [x] Set up home page
 - [x] Configure the circular buttons
-- [ ] Configure the linear gauge for scores
+- [x] Configure the linear gauge for scores
 - [x] Set up themes
 - [x] Confirm we are using theme colors through out the app
 - [x] Add logo and branding
@@ -56,11 +56,20 @@ samples, guidance on mobile development, and a full API reference.
 - [x] change text color blue
 
 - [x] fix checks red !, yellow -, green check
-- [ ] add rooms and images, use descriptions from spreadsheet
-- [ ] add Ann image
+- [x] add rooms and images, use descriptions from spreadsheet
+- [x] add Ann image
 - [x] remove larger descriptions
-- [ ] github
+- [x] github deploy
 - [x] score arrow position
+
+- [x] make environmental assessment read from tsv
+- [x] make environmental assessment view multiple images
+- [x] make environmental assessment zoom in for full picture
+- [x] scale text and layout for different screen sizes
+
+- [ ] fix issue with circular wedge buttons where wedges get cut off, but text realigns with available width 
+<!-- And then we still have the misalignment issue when the wedges get clipped, it looks like the wedge text is being centered differently than the wedges themselves. [Image #2]. I'd prefer for the circle wedges to always be contained within the height or the width, whichever is smaller, of the available area. -->
+
 
 <!-- urgent, needs attention, passed -->
 

@@ -15,6 +15,11 @@ class DimensionScoreGauge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Calculate responsive font sizes based on screen width
+    final screenWidth = MediaQuery.of(context).size.width;
+    final double titleFontSize = _calculateTitleFontSize(screenWidth);
+    final double descriptionFontSize = _calculateDescriptionFontSize(screenWidth);
+    
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -39,8 +44,8 @@ class DimensionScoreGauge extends StatelessWidget {
         children: [
           Text(
             dimensionName,
-            style: const TextStyle(
-              fontSize: 18,
+            style: TextStyle(
+              fontSize: titleFontSize,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2,
             ),
@@ -50,7 +55,7 @@ class DimensionScoreGauge extends StatelessWidget {
           Text(
             description,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: descriptionFontSize,
               color: AppTheme.textMediumColor,
               height: 1.4,
             ),
@@ -84,12 +89,20 @@ class DimensionScoreGauge extends StatelessWidget {
                   // Pointer triangle
                   Positioned(
                     left: score * width - 8, // Position based on score
-                    top: -6,
-                    child: const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black,
-                      size: 32,
-                    ),
+                    top: -18, //-6,
+                    // child: const Icon(
+                    //   Icons.arrow_drop_down,
+                    //   color: Colors.black,
+                    //   size: 32,
+                    // ),
+                    child: const Text(
+                      "|",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 32,
+                      ),
+                    ), 
                   ),
                 ],
               );
@@ -123,6 +136,36 @@ class DimensionScoreGauge extends StatelessWidget {
       ),
     );
   }
+
+  /// Calculate responsive title font size based on screen width
+  double _calculateTitleFontSize(double screenWidth) {
+    if (screenWidth > 1600) {
+      return 24.0; // Extra large desktop
+    } else if (screenWidth > 1400) {
+      return 22.0; // Large desktop
+    } else if (screenWidth > 1000) {
+      return 18.0; // Medium desktop
+    } else if (screenWidth > 700) {
+      return 16.0; // Small desktop/large tablet
+    } else {
+      return 15.0; // Mobile/small tablet
+    }
+  }
+
+  /// Calculate responsive description font size based on screen width
+  double _calculateDescriptionFontSize(double screenWidth) {
+    if (screenWidth > 1600) {
+      return 16.0; // Extra large desktop
+    } else if (screenWidth > 1400) {
+      return 15.0; // Large desktop
+    } else if (screenWidth > 1000) {
+      return 14.0; // Medium desktop
+    } else if (screenWidth > 700) {
+      return 13.0; // Small desktop/large tablet
+    } else {
+      return 12.0; // Mobile/small tablet
+    }
+  }
 }
 
 class _ScoreLabel extends StatelessWidget {
@@ -148,10 +191,8 @@ class _ScoreLabel extends StatelessWidget {
             borderRadius: BorderRadius.circular(3),
           ),
           child: isActive
-              ? const Icon(
-                  // Icons.change_history_rounded,
-                  Icons.notifications,
-                  // Icons.check, //red !, yellow -, green check
+              ? Icon(
+                  _getIconForLabel(text),
                   color: Colors.white,
                   size: 12,
                 )
@@ -168,5 +209,20 @@ class _ScoreLabel extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  /// Get the appropriate icon based on the label text
+  IconData _getIconForLabel(String labelText) {
+    switch (labelText) {
+      case 'HIGH PRIORITY':
+        return Icons.priority_high; // Red exclamation (!)
+      case 'NEEDS ATTENTION':
+        // return Icons.remove; // Yellow minus (-)
+        return Icons.notifications; // Yellow bell
+      case 'PASSED':
+        return Icons.check; // Green check (✓)
+      default:
+        return Icons.circle; // Fallback
+    }
   }
 }

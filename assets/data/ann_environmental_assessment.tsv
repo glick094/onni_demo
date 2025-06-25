@@ -1,0 +1,50 @@
+photoID	assessmentID	modificationID	assessmentArea	modification	description	status	image
+000001	000001	000041	Bathroom	Detachable hand-held showerhead	Install hand-held shower head to allow bathing while seated; adjustable height.	urgent	bathroom_detachable-handheld-showerhead.JPG
+000002	000001	000060	Bathroom	Door Stopper at Base or Wall	Install door stopper to prevent slamming or injury from abrupt door swings.	not urgent	bathroom_door-stopper.JPG
+000003	000001	000039	Bathroom	Shower grab bars	Install wall-mounted grab bars for support while using the shower.	urgent	bathroom_grab-bars_01.JPG
+000004	000001	000039	Bathroom	Shower grab bars	Install wall-mounted grab bars for support while using the shower.	urgent	bathroom_grab-bars_02.JPG
+000005	000001	000039	Bathroom	Shower grab bars	Install wall-mounted grab bars for support while using the shower.	urgent	bathroom_grab-bars_03.JPG
+000006	000001	000050	Bathroom	Improved lighting	Install dimmable, glare-free, or motion-activated lighting.	urgent	bathroom_improved-lighting_01.JPG
+000007	000001	000050	Bathroom	Improved lighting	Install dimmable, glare-free, or motion-activated lighting.	urgent	bathroom_improved-lighting_02.JPG
+000008	000001	000042	Bathroom	Lever-style or ADA shower controls	Install lever style shower controls for easier grip than knobs; placed at accessible height.	not urgent	bathroom_lever-style-or-ADA-shower-controls.JPG
+000009	000001	000043	Bathroom	Non-slip flooring	Install a textured tile, slip-resistant vinyl, or anti-slip coatings to prevent falls.	urgent	bathroom_non-slip-flooring.JPG
+000010	000001	000044	Bathroom	Raised toilet / comfort-height	Install a raised toilet seat that is between 17–19″ in height to reduce effort to sit and stand.	not urgent	bathroom_raised-toilet.JPG
+000011	000001	000037	Bathroom	Zero-threshold shower	Install zero-threshholalk-in shower with no step; improves wheelchair/walker access and reduces fall risk.	urgent	bathroom_zero-threshold-shower.JPG
+000012	000001	000089	Bedroom	Bedside grab bar / transfer pole	Install bedside grab bar to provide stability getting in and out of bed. Can be freestanding or mounted.	not urgent	bedroom_bedside-grab-bar.JPG
+000013	000001	000095	Bedroom	Lever-Style Handles	Replace door knobs with lever-style door handle for ease of use.	not urgent	bedroom_lever-style-door-handles.JPG
+000014	000001	000091	Bedroom	Smart lighting / voice controls	Install remote or voice-controlled lighting and window coverings.	not urgent	bedroom_lighting.JPG
+000015	000001	000018	Entry / Foyer	Adequate lighting	Improve visibility by installing brighter fixtures or bulbs.	urgent	entry_adequate-lighting.JPG
+000016	000001	000019	Entry / Foyer	Door lighting	Improve lighting at the doorway to illuminate door access	urgent	entry_door.JPG
+000017	000001	000028	Entry / Foyer	Grab bar	Install grab bar to assist balance when entering/exiting.	not urgent	entry_grab-bar.JPG
+000018	000001	000017	Entry / Foyer	Non-slip flooring	Replace floor with non-slip flooring or coat floor with non-slip coating for better traction.	urgent	entry_non-slip-flooring.JPG
+000019	000001	000013	Entry / Foyer	No-step entry	Install a non-step entry for a flush threshold. Reduce chance of tripping.	urgent	entry_no-step-entry_low-slope-threshold-ramp.jpg
+000020	000001	000021	Entry / Foyer	Entry seating (bench or chair)	Install a bench or stable chair for dressing/undressing shoes.	passed	entry_seating.JPG
+000021	000001	000025	Entry / Foyer	Stairs	Widen stairs to a minimum width of 36 inches for improved safety.	passed	entry_stairs_01.JPG
+000022	000001	000025	Entry / Foyer	Stairs	Widen stairs to a minimum width of 36 inches for improved safety.	passed	entry_stairs_02.JPG
+000023	000001	000022	Entry / Foyer	Storage within reach	Adust storage so hooks, shelves, or cubbies are at an accessible height.	not urgent	entry_storage-within-reach.JPG
+000024	000001	000001	Exterior	Motion-Activated Lighting	Add motion-activated lighting for safer navigation at night.	urgent	exterior_door-lighting.JPG
+000025	000001	000005	Exterior	Handrails Along Paths	Install handrails for additional balance support on exterior walkways and steps.	urgent	exterior_handrails-along-paths_01.JPG
+000026	000001	000005	Exterior	Handrails Along Paths	Install handrails for additional balance support on exterior walkways and steps.	urgent	exterior_handrails-along-paths_02.JPG
+000027	000001	000008	Exterior	Lever-Style Exterior Door Handles	Replace exterior door latches with lever-styel door handles to simplify door use.	not urgent	exterior_lever-style-door-handles_keyless-entry.JPG
+000028	000001	000011	Exterior	Low-Maintenance Landscaping	Reduce landscaping upkeep with xeriscaping or native plantings.	not urgent	exterior_low-maintenence-landscaping.JPG
+000029	000001	000001	Exterior	Motion-Activated Lighting	Add motion-activated lighting for safer navigation at night.	urgent	exterior_motion-activated-lighting_01.JPG
+000030	000001	000001	Exterior	Motion-Activated Lighting	Add motion-activated lighting for safer navigation at night.	urgent	exterior_motion-activated-lighting_02.JPG
+000031	000001	000003	Exterior	Non-Slip Exterior Surfaces	Apply texture or non-slip coatings to ramps, steps, and walkways.	urgent	exterior_non-slip-exterior-surfaces_ramp-installation_01.JPG
+000032	000001	000003	Exterior	Non-Slip Exterior Surfaces	Apply texture or non-slip coatings to ramps, steps, and walkways.	urgent	exterior_non-slip-exterior-surfaces_ramp-installation_02.JPG
+000033	000001	000002	Exterior	Pathway Lighting	Add low-voltage or solar lights along walkways to improve visibility and reduce tripping.	urgent	exterior_pathway-lighting.JPG
+000034	000001	000006	Exterior	Ramp Installation	Replace or supplement stairs with a wheelchair-accessible ramp.	not urgent	exterior_ramp-installation.JPG
+000035	000001	000009	Exterior	Smart Video Doorbell	Install a smart video doorbell for improved security.	passed	exterior_smart-video-doorbell.JPG
+000036	000001	000007	Exterior	Threshold Ramps	Install a threshhold ramp for a smooth transition between uneven exterior door thresholds and landing surfaces.	urgent	exterior_threshold-ramps.JPG
+000037	000001	000129	Garage Safety Checklist	Improve lighting	Install bright, motion-activated or timed lighting throughout the garage.	urgent	garage_lighting.JPG
+000038	000001	000128	Garage Safety Checklist	Low-slope threshold ramp	Keep thresholds low (no more than ½") to prevent tripping.	urgent	garage_ramp.JPG
+000039	000001	000074	Kitchen	Cooktop with front controls	Replace cooktop with a cooktop with front controls to Reduce risk from reaching over burners.	not urgent	kitchen_cooktop-with-front-controls.JPG
+000040	000001	000066	Kitchen	Re-locate commonly used items	Reccomended to move commonly used items to lower shelves.	not urgent	kitchen_move-commonly-used-items-to-lower-cabinets.JPG
+000041	000001	000068	Kitchen	Non-slip flooring	Install textured tile, slip-resistant vinyl, or anti-slip coatings.	urgent	kitchen_non-slip-and-anti-fatigue-flooring.JPG
+000042	000001	000061	Kitchen	Pull-down shelves or lift systems	Install wall cabinet inserts that bring shelves down to reachable height.	not urgent	kitchen_pull-down-shelves_01.JPG
+000043	000001	000061	Kitchen	Pull-down shelves or lift systems	Install wall cabinet inserts that bring shelves down to reachable height.	not urgent	kitchen_pull-down-shelves_02.JPG
+000044	000001	000071	Kitchen	Pull-out drawers and organizers	Install pull-out drawers and organizers as cabinet upgrades to replace hard-to-reach shelving.	not urgent	kitchen_pull-out-drawers-and-organizers.JPG
+000045	000001	000064	Kitchen	Lever-style or touch faucets	Install lever-style or touch faucets for easier grip or hands-free activation for arthritic or limited dexterity users.	not urgent	kitchen_touch-faucet_01.JPG
+000046	000001	000064	Kitchen	Lever-style or touch faucets	Install lever-style or touch faucets for easier grip or hands-free activation for arthritic or limited dexterity users.	not urgent	kitchen_touch-faucet_02.JPG
+000047	000001	000120	Smart Home Technology	Smart Smoke/CO Detectors	Install smart smoke/CO detectors that send emergency alerts to phones or caregivers.	urgent	security_smart-smoke-CO-detectors.JPG
+000048	000001	000102	Security Upgrades	Smart Video Doorbell	Install smart video doorbell to let residents see and speak with visitors remotely. Great for safety and convenience.	passed	security_smart-video-doorbell.JPG
+000049	000001	000107	Security Upgrades	Window Sensors / Alarms	Install window sensors/alarms to alert residents or caregivers if windows are opened unexpectedly.	passed	security_window-locks.JPG

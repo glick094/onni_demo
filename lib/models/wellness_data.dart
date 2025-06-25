@@ -46,28 +46,28 @@ class WellnessData {
                   title: 'Non-slip surfaces',
                   description: 'Recommended to apply a textured, anti-slip concrete sealant.',
                   status: IssueStatus.urgent,
-                  imageUrl: 'assets/images/non_slip_surface.png',
+                  imageUrls: ['assets/images/non_slip_surface.png'],
                 ),
                 Issue(
                   id: 'lighting_exterior',
                   title: 'Lighting',
                   description: 'Recommended to install motion-activated lighting along the walkway and driveway.',
                   status: IssueStatus.urgent,
-                  imageUrl: 'assets/images/exterior_lighting.png',
+                  imageUrls: ['assets/images/exterior_lighting.png'],
                 ),
                 Issue(
                   id: 'hand_rails',
                   title: 'Hand rails',
                   description: 'Recommended to install handrail to exterior foyer.',
                   status: IssueStatus.nonUrgent,
-                  imageUrl: 'assets/images/hand_rails.png',
+                  imageUrls: [ 'assets/images/hand_rails.png'],
                 ),
                 Issue(
                   id: 'threshold',
                   title: 'Threshold',
                   description: 'Recommended to reduce the height of the exterior front door.',
                   status: IssueStatus.urgent,
-                  imageUrl: 'assets/images/threshold.png',
+                  imageUrls: [ 'assets/images/threshold.png'],
                 ),
               ],
             ),
@@ -80,14 +80,14 @@ class WellnessData {
                   title: 'Lighting',
                   description: 'Recommended to install brighter lighting.',
                   status: IssueStatus.nonUrgent,
-                  imageUrl: 'assets/images/entry_lighting.png',
+                  imageUrls: [ 'assets/images/entry_lighting.png'],
                 ),
                 Issue(
                   id: 'non_slip_surfaces_entry',
                   title: 'Non-slip surfaces',
                   description: 'Entry tile needs to be slip-resistant.',
                   status: IssueStatus.urgent,
-                  imageUrl: 'assets/images/entry_flooring.png',
+                  imageUrls: [ 'assets/images/entry_flooring.png'],
                 ),
               ],
             ),
@@ -101,7 +101,7 @@ class WellnessData {
                   // description: 'There are no grab bars in the bathroom, which increases the risk of slips and falls—especially when getting in and out of the shower or using the toilet.\n\nRecommendations\n\nInstall grab bars to improve safety and make daily routines easier:\n\n• Shower Entry: A vertical or angled grab bar just outside the shower to assist with balance when stepping in and out.\n\n• Inside Shower: A horizontal bar along the back wall for stability while standing or moving.\n\n• Toilet Area: A horizontal grab bar on the wall beside the toilet to assist with sitting and standing.\n\n• Installation: All grab bars should be securely anchored into wall studs or blocking—not just drywall—for maximum support.\n\n• Finish: Choose a textured or non-slip finish for better grip, especially with wet hands.',
                   description: 'There are no grab bars in the bathroom, which increases the risk of slips and falls—especially when getting in and out of the shower or using the toilet.',
                   status: IssueStatus.urgent,
-                  imageUrl: 'assets/images/grab_bars.png',
+                  imageUrls: [ 'assets/images/grab_bars.png'],
                 ),
                 Issue(
                   id: 'non_slip_surfaces_bathroom',
@@ -109,7 +109,7 @@ class WellnessData {
                   // description: 'The current bathroom flooring and shower/tub surfaces are smooth and become slippery when wet. This increases the risk of slips and falls, especially for older adults or anyone with balance or mobility concerns.\n\nRecommendations\n\n• Install non-slip strips or coating in the tub/shower area to create immediate traction.\n\n• Consider replacing the bathroom floor tile with slip-resistant flooring, such as textured vinyl, rubber, or slip-rated tile.\n\n• In the meantime, use non-slip bath mats with rubber backing outside the tub and near the sink to reduce fall risk.',
                   description: 'The current bathroom flooring and shower/tub surfaces are smooth and become slippery when wet. This increases the risk of slips and falls, especially for older adults or anyone with balance or mobility concerns.',
                   status: IssueStatus.urgent,
-                  imageUrl: 'assets/images/non_slip_surface_bathroom.png',
+                  imageUrls: [ 'assets/images/non_slip_surface_bathroom.png'],
                 ),
                 Issue(
                   id: 'shower_controls',
@@ -117,7 +117,7 @@ class WellnessData {
                   // description: 'The current shower has a twist-style knob that is positioned too low, which can be difficult to reach or turn—especially for someone with limited mobility or arthritis. There is also no handheld showerhead, which limits accessibility and ease of use.\n\nRecommendations\n\n• Replace the knob with a single-lever handle mounted at waist height for easier temperature control without bending or straining.\n\n• Install a handheld, detachable showerhead with an adjustable slide bar to make bathing safer and more comfortable, whether seated or standing.\n\n• Choose models with large, easy-to-use controls for added convenience.',
                   description: 'The current shower has a twist-style knob that is positioned too low, which can be difficult to reach or turn—especially for someone with limited mobility or arthritis. There is also no handheld showerhead, which limits accessibility and ease of use.',
                   status: IssueStatus.nonUrgent,
-                  imageUrl: 'assets/images/shower_controls.png',
+                  imageUrls: [ 'assets/images/shower_controls.png'],
                 ),
                 Issue(
                   id: 'toilet_seat',
@@ -125,7 +125,7 @@ class WellnessData {
                   // description: 'The existing toilet is standard height, which can be difficult for someone with limited strength, balance, or mobility to sit down on or stand up from safely.\n\nRecommendations\n\n• Install a raised toilet seat to increase the height by 2-4 inches, making transfers easier and reducing strain on the knees and hips.\n\n• Choose a model that securely attaches to the existing toilet and includes armrests or side handles for added stability and support.\n\n• Consider a toilet safety frame for additional balance assistance if needed.',
                   description: 'The existing toilet is standard height, which can be difficult for someone with limited strength, balance, or mobility to sit down on or stand up from safely.',
                   status: IssueStatus.nonUrgent,
-                  imageUrl: 'assets/images/toilet_seat.png',
+                  imageUrls: [ 'assets/images/toilet_seat.png'],
                 ),
               ],
             ),
@@ -199,15 +199,18 @@ class Issue {
   final String title;
   final String description;
   final IssueStatus status;
-  final String? imageUrl;
+  final List<String> imageUrls;
 
   Issue({
     required this.id,
     required this.title,
     required this.description,
     required this.status,
-    this.imageUrl,
+    this.imageUrls = const [],
   });
+  
+  // Convenience getter for backwards compatibility
+  String? get imageUrl => imageUrls.isNotEmpty ? imageUrls.first : null;
 }
 
 enum IssueStatus {

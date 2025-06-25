@@ -132,17 +132,22 @@ class _HomeScreenState extends State<HomeScreen> {
   // Build main content based on selected navigation index
   Widget _buildMainContent() {
     if (_selectedNavIndex == 0) {
-      // Dashboard view
+      // Dashboard view with responsive padding and spacing
+      // final screenWidth = MediaQuery.of(context).size.width;
+      final screenWidth = MediaQuery.of(context).size.width < MediaQuery.of(context).size.height ? MediaQuery.of(context).size.width : MediaQuery.of(context).size.height;
+      final responsivePadding = _calculateResponsivePadding(screenWidth);
+      final responsiveSpacing = _calculateResponsiveSpacing(screenWidth);
+      
       return SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(responsivePadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Live Well Score Gauge
               LiveWellGauge(score: _wellnessData.liveWellScore),
               
-              const SizedBox(height: 40),
+              SizedBox(height: responsiveSpacing),
               
               // Circular Wedge Layout (centered)
               Center(
@@ -168,26 +173,11 @@ class _HomeScreenState extends State<HomeScreen> {
       final dimensionId = _getDimensionIdFromNavIndex(_selectedNavIndex);
       final dimensionData = _wellnessData.dimensionScores[dimensionId];
       
-      if (dimensionData != null) {
-        return DimensionScreen(
-          dimensionId: dimensionId,
-          dimensionData: dimensionData,
-        );
-      } else {
-        // Fallback for dimensions without detailed data
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Text(
-              'This dimension view is coming soon.',
-              style: TextStyle(
-                fontSize: 16,
-                color: AppTheme.textMediumColor,
-              ),
-            ),
-          ),
-        );
-      }
+      return DimensionScreen(
+        dimensionId: dimensionId,
+        dimensionData: dimensionData,
+        assessmentId: dimensionId == 'environmental' ? '000001' : null, // Use assessment ID for environmental
+      );
     }
   }
 
@@ -262,5 +252,35 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  /// Calculate responsive padding based on screen width
+  double _calculateResponsivePadding(double screenWidth) {
+    if (screenWidth > 1600) {
+      return 48.0; // Extra large desktop
+    } else if (screenWidth > 1400) {
+      return 40.0; // Large desktop
+    } else if (screenWidth > 1000) {
+      return 32.0; // Medium desktop
+    } else if (screenWidth > 600) {
+      return 24.0; // Small desktop/large tablet
+    } else {
+      return 16.0; // Mobile/small tablet
+    }
+  }
+
+  /// Calculate responsive spacing between components based on screen width
+  double _calculateResponsiveSpacing(double screenWidth) {
+    if (screenWidth > 1600) {
+      return 64.0; // Extra large desktop
+    } else if (screenWidth > 1400) {
+      return 56.0; // Large desktop
+    } else if (screenWidth > 1000) {
+      return 48.0; // Medium desktop
+    } else if (screenWidth > 600) {
+      return 40.0; // Small desktop/large tablet
+    } else {
+      return 24.0; // Mobile/small tablet
+    }
   }
 }

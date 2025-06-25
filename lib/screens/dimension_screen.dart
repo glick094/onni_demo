@@ -4,15 +4,18 @@ import '../utils/theme.dart';
 import '../utils/constants.dart';
 import '../widgets/dashboard/dimension_score_gauge.dart';
 import '../widgets/dashboard/subsection_card.dart';
+import '../services/assessment_data_service.dart';
 
 class DimensionScreen extends StatefulWidget {
   final String dimensionId;
-  final DimensionScore dimensionData;
+  final DimensionScore? dimensionData;
+  final String? assessmentId;
 
   const DimensionScreen({
     super.key,
     required this.dimensionId,
-    required this.dimensionData,
+    this.dimensionData,
+    this.assessmentId,
   });
 
   @override
@@ -20,13 +23,7 @@ class DimensionScreen extends StatefulWidget {
 }
 
 class _DimensionScreenState extends State<DimensionScreen> {
-  late List<SubSection> subSections;
-
-  @override
-  void initState() {
-    super.initState();
-    subSections = List.from(widget.dimensionData.subSections);
-  }
+  final AssessmentDataService _dataService = AssessmentDataService();
 
   @override
   Widget build(BuildContext context) {
@@ -37,45 +34,105 @@ class _DimensionScreenState extends State<DimensionScreen> {
 
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
-      body: Column(
-        children: [
-          // Dimension Score Gauge
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: DimensionScoreGauge(
-              dimensionName: dimension['name'],
-              description: _getDimensionDescription(widget.dimensionId),
-              score: widget.dimensionData.score,
-            ),
-          ),
+      body: _buildContent(dimension),
+    );
+  }
+
+  Widget _buildContent(Map<String, dynamic> dimension) {
+    // For environmental dimension with assessment ID, load from TSV
+    if (widget.dimensionId == 'environmental' && widget.assessmentId != null) {
+      return FutureBuilder<DimensionScore>(
+        future: _dataService.getEnvironmentalDimensionScore(widget.assessmentId!),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
           
-          // Scrollable subsections
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              itemCount: subSections.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: SubSectionCard(
-                    subSection: subSections[index],
-                    onToggleExpanded: () {
-                      setState(() {
-                        subSections[index] = SubSection(
-                          id: subSections[index].id,
-                          name: subSections[index].name,
-                          issues: subSections[index].issues,
-                          isExpanded: !subSections[index].isExpanded,
-                        );
-                      });
-                    },
-                  ),
-                );
-              },
-            ),
+          if (snapshot.hasError) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.error_outline,
+                      size: 48,
+                      color: AppTheme.redColor,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Error loading assessment data',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.textDarkColor,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      snapshot.error.toString(),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppTheme.textMediumColor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+          
+          if (snapshot.hasData) {
+            return _buildDimensionContent(dimension, snapshot.data!);
+          }
+          
+          return const Center(child: Text('No data available'));
+        },
+      );
+    }
+    
+    // For other dimensions or when no assessment ID, use provided data
+    if (widget.dimensionData != null) {
+      return _buildDimensionContent(dimension, widget.dimensionData!);
+    }
+    
+    // Fallback for dimensions without detailed data
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Text(
+          'This dimension view is coming soon.',
+          style: TextStyle(
+            fontSize: 16,
+            color: AppTheme.textMediumColor,
           ),
-        ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildDimensionContent(Map<String, dynamic> dimension, DimensionScore dimensionData) {
+    return Column(
+      children: [
+        // Dimension Score Gauge
+        Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: DimensionScoreGauge(
+            dimensionName: dimension['name'],
+            description: _getDimensionDescription(widget.dimensionId),
+            score: dimensionData.score,
+          ),
+        ),
+        
+        // Scrollable subsections
+        Expanded(
+          child: SubSectionList(
+            subSections: dimensionData.subSections,
+          ),
+        ),
+      ],
     );
   }
 
@@ -100,5 +157,62 @@ class _DimensionScreenState extends State<DimensionScreen> {
       default:
         return 'This dimension contributes to overall wellness and quality of life.';
     }
+  }
+}
+
+/// Stateful widget to handle subsection expansion state
+class SubSectionList extends StatefulWidget {
+  final List<SubSection> subSections;
+
+  const SubSectionList({
+    super.key,
+    required this.subSections,
+  });
+
+  @override
+  State<SubSectionList> createState() => _SubSectionListState();
+}
+
+class _SubSectionListState extends State<SubSectionList> {
+  late List<SubSection> subSections;
+
+  @override
+  void initState() {
+    super.initState();
+    subSections = List.from(widget.subSections);
+  }
+
+  @override
+  void didUpdateWidget(SubSectionList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.subSections != widget.subSections) {
+      subSections = List.from(widget.subSections);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      itemCount: subSections.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          child: SubSectionCard(
+            subSection: subSections[index],
+            onToggleExpanded: () {
+              setState(() {
+                subSections[index] = SubSection(
+                  id: subSections[index].id,
+                  name: subSections[index].name,
+                  issues: subSections[index].issues,
+                  isExpanded: !subSections[index].isExpanded,
+                );
+              });
+            },
+          ),
+        );
+      },
+    );
   }
 }
