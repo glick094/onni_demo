@@ -47,6 +47,11 @@ jobs:
     - name: Build web app
       run: flutter build web --release --web-renderer html --base-href "/onni_demo/"
       
+    - name: Patch index.html for relative URLs
+      run: |
+        sed -i 's|<base href="/">|<base href="/onni_demo/">|' build/web/index.html
+
+      
     - name: Setup Pages
       uses: actions/configure-pages@v4
       
