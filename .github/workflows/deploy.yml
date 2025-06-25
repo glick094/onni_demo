@@ -1,8 +1,8 @@
-name: Build and Deploy Flutter Web to GitHub Pages
+name: Build and Deploy Flutter Web to GitHub Pages with Image Optimization
 
 on:
   push:
-    branches: [ main ]  # Change to 'master' if that's your default branch
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -29,7 +29,7 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.24.3'  # Use latest stable version or specify your preferred version
+        flutter-version: '3.24.3'
         channel: 'stable'
         
     - name: Enable Flutter Web
@@ -38,26 +38,98 @@ jobs:
     - name: Get dependencies
       run: flutter pub get
       
-    # - name: Analyze code
-    #   run: flutter analyze
-      
-    # - name: Run tests
-    #   run: flutter test
+    - name: Install FFmpeg and optimize images
+      run: |
+        echo "Installing FFmpeg..."
+        sudo apt-get update -qq
+        sudo apt-get install -y ffmpeg bc
+        
+        echo "Starting image optimization..."
+        
+        # Initialize counters
+        total_files=0
+        total_original_size=0
+        total_optimized_size=0
+        
+        # Process all images in ann_assessment directories
+        find assets/images/ann_assessment -type f \( -name "*.jpg" -o -name "*.JPG" -o -name "*.jpeg" -o -name "*.JPEG" -o -name "*.png" -o -name "*.PNG" \) | while read file; do
+          if [ -f "$file" ]; then
+            original_size=$(stat -c%s "$file")
+            original_kb=$(echo "scale=1; $original_size/1024" | bc)
+            
+            echo "Processing: $file (${original_kb}KB)"
+            
+            # Create temporary optimized file
+            temp_file="${file}_temp.jpg"
+            
+            # FFmpeg optimization
+            if ffmpeg -i "$file" \
+                -vf "scale='min(800,iw)':'min(600,ih)':force_original_aspect_ratio=decrease" \
+                -q:v 8 \
+                -y \
+                "$temp_file" \
+                -loglevel error 2>/dev/null; then
+              
+              new_size=$(stat -c%s "$temp_file")
+              new_kb=$(echo "scale=1; $new_size/1024" | bc)
+              savings=$(echo "scale=1; (1-$new_size/$original_size)*100" | bc)
+              
+              # Determine output filename (convert to .jpg)
+              if [[ "$file" =~ \.(png|PNG)$ ]]; then
+                output_file="${file%.*}.jpg"
+                rm "$file"  # Remove original PNG
+              else
+                output_file="$file"
+              fi
+              
+              # Replace with optimized version
+              mv "$temp_file" "$output_file"
+              
+              echo "  ✓ Optimized: ${original_kb}KB → ${new_kb}KB (${savings}% reduction)"
+              
+              # Update totals
+              total_files=$((total_files + 1))
+              total_original_size=$((total_original_size + original_size))
+              total_optimized_size=$((total_optimized_size + new_size))
+            else
+              echo "  ✗ Failed to optimize: $file"
+              rm "$temp_file" 2>/dev/null || true
+            fi
+          fi
+        done
+        
+        echo ""
+        echo "=== Image Optimization Summary ==="
+        if [ $total_files -gt 0 ]; then
+          total_original_mb=$(echo "scale=2; $total_original_size/1024/1024" | bc)
+          total_optimized_mb=$(echo "scale=2; $total_optimized_size/1024/1024" | bc)
+          total_savings=$(echo "scale=1; (1-$total_optimized_size/$total_original_size)*100" | bc)
+          
+          echo "Files optimized: $total_files"
+          echo "Original size: ${total_original_mb}MB"
+          echo "Optimized size: ${total_optimized_mb}MB"
+          echo "Total savings: ${total_savings}%"
+        else
+          echo "No images found to optimize"
+        fi
       
     - name: Build web app
       run: flutter build web --release --web-renderer html --base-href "/onni_demo/"
       
-    - name: Patch index.html for relative URLs
+    - name: Verify optimized assets in build
       run: |
-        sed -i 's|<base href="/">|<base href="/onni_demo/">|' build/web/index.html
+        echo "=== Build Verification ==="
+        echo "Checking for ann_assessment images in build output:"
+        find build/web/assets -path "*ann_assessment*" -name "*.jpg" | head -20
         
-    # Debug: List assets to verify they're included
-    - name: List built assets
-      run: |
-        echo "Checking built assets structure:"
-        find build/web/assets -type f -name "*.jpg" -o -name "*.JPG" -o -name "*.png" -o -name "*.PNG" | head -20
+        echo ""
+        echo "Bathroom images specifically:"
+        find build/web/assets -path "*Bathroom*" -name "*.jpg" | wc -l | xargs echo "Count:"
         
-      
+        echo ""
+        echo "Sample bathroom image paths:"
+        find build/web/assets -path "*Bathroom*" -name "*.jpg" | head -5
+        
     - name: Setup Pages
       uses: actions/configure-pages@v4
       
@@ -72,7 +144,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/main'  # Only deploy on main branch
+    if: github.ref == 'refs/heads/main'
     
     steps:
     - name: Deploy to GitHub Pages
