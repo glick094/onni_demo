@@ -60,6 +60,10 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  web:
+    generate: true
+    renderer: html
+    relative-urls: true
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -68,8 +72,8 @@ flutter:
   assets: 
     - assets/svg/
     - assets/logo/Logo-04.png
-    - assets/images/...
-    - assets/data/...
+    - assets/images/
+    - assets/data/
   
   fonts: 
     - family: OnniHomesIcons
