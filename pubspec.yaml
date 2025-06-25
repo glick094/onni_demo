@@ -77,7 +77,7 @@ flutter:
     - assets/images/ann_assessment/Garage/
     - assets/images/ann_assessment/Hallway/
     - assets/images/ann_assessment/Kitchen/
-    - "assets/images/ann_assessment/Security & Smarthome/"
+    - assets/images/ann_assessment/Security-Smarthome/
   
   fonts: 
     - family: OnniHomesIcons
