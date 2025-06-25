@@ -68,7 +68,8 @@ flutter:
   assets: 
     - assets/svg/
     - assets/logo/Logo-04.png
-    - assets/images/
+    - assets/images/...
+    - assets/data/...
   
   fonts: 
     - family: OnniHomesIcons
