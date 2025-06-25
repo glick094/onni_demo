@@ -144,7 +144,8 @@ class AssessmentDataService {
     final List<String> imageUrls = [];
     for (final record in records) {
       if (record.image.isNotEmpty) {
-        final imageUrl = 'images/ann_assessment/${_getAreaFolder(record.assessmentArea)}/${record.image}';
+        // final imageUrl = 'images/ann_assessment/${_getAreaFolder(record.assessmentArea)}/${record.image}';
+        final imageUrl = 'assets/images/ann_assessment/${_getAreaFolder(record.assessmentArea)}/${record.image}';
         imageUrls.add(imageUrl);
       }
     }
