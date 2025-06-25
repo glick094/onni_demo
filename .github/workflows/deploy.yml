@@ -50,7 +50,13 @@ jobs:
     - name: Patch index.html for relative URLs
       run: |
         sed -i 's|<base href="/">|<base href="/onni_demo/">|' build/web/index.html
-
+        
+    # Debug: List assets to verify they're included
+    - name: List built assets
+      run: |
+        echo "Checking built assets structure:"
+        find build/web/assets -type f -name "*.jpg" -o -name "*.JPG" -o -name "*.png" -o -name "*.PNG" | head -20
+        
       
     - name: Setup Pages
       uses: actions/configure-pages@v4
